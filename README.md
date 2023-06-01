@@ -4,8 +4,8 @@
 
 #### Packages
 
-- [@weavechain/weave-js-api](https://github.com/weavechain/weavechain/tree/main/packages/weave-js-api): Javascript API
-- [@weavechain/weave-react-api](https://github.com/weavechain/weavechain/tree/main/packages/weave-react-api): React Native API
+- [@weavechain/weave-js-api](https://github.com/weavechain/weave-js-api/tree/master/packages/weave-js-api): Javascript API
+- [@weavechain/weave-react-api](https://github.com/weavechain/weave-js-api/tree/master/packages/weave-react-api): React Native API
 
 #### Docs
 
