@@ -1,0 +1,35 @@
+{
+  "name": "@weavechain/weave-js-api",
+  "version": "1.0.1",
+  "description": "Weavechain API",
+  "main": "index.js",
+  "scripts": {
+    "build": "yarn lerna run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:weavechain/weave-js-api"
+  },
+  "keywords": [
+    "Weavechain",
+    "API"
+  ],
+  "author": "Weavechain",
+  "license": "MIT",
+  "private": false,
+  "bugs": {
+    "url": "https://github.com/weavechain/weave-js-api/issues"
+  },
+  "homepage": "https://docs.weavechain.com",
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "rimraf": "^5.0.1",
+    "webpack": "^5.85.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "lerna": "^6.6.2"
+  }
+}

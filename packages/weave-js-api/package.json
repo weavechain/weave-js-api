@@ -1,0 +1,47 @@
+{
+  "name": "@weavechain/weave-js-api",
+  "type": "module",
+  "version": "1.0.3",
+  "description": "Weavechain API",
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "eslint": "eslint",
+    "lint": "eslint \"**/*.js\"",
+    "build": "node scripts/build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:weavechain/weave-js-api"
+  },
+  "keywords": [
+    "Weavechain",
+    "API"
+  ],
+  "author": "Weavechain",
+  "license": "MIT",
+  "private": false,
+  "bugs": {
+    "url": "https://github.com/weavechain/weave-js-api/issues"
+  },
+  "main": "lib/index.js",
+  "exports": {
+      ".": "./lib/index.js",
+      "./api": "./lib/nodeapi.js",
+      "./helper": "./lib/helper.js"
+  },
+  "files": [
+    "lib",
+    "README.md"
+  ],
+  "homepage": "https://docs.weavechain.com",
+  "dependencies": {
+    "base58-js": "^2.0.0",
+    "crypto-js": "^4.1.1",
+    "elliptic": "^6.5.4",
+    "eslint": "^7.32.0",
+    "eslint-plugin-markdown": "^2.2.1",
+    "java-random": "^0.4.0",
+    "jsrsasign": "^10.8.6",
+    "uuid": "^9.0.0"
+  }
+}
