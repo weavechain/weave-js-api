@@ -1,5 +1,8 @@
 node_modules/
 packages/weave-js-api/dist/
 packages/weave-react-api/dist/
+packages/weave-node-api/dist/
 *.log
 *.bak
+*.backup
+

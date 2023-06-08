@@ -1,6 +1,6 @@
 {
   "name": "@weavechain/weave-js-api",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "Weavechain API",
   "main": "index.js",
   "scripts": {

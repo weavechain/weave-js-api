@@ -2,28 +2,23 @@
 
 [https://weavechain.com](https://weavechain.com): Layer-0 For Data
 
-#### Packages
-
-- [@weavechain/weave-js-api](https://github.com/weavechain/weave-js-api/tree/master/packages/weave-js-api): Javascript API
-- [@weavechain/weave-react-api](https://github.com/weavechain/weave-js-api/tree/master/packages/weave-react-api): React Native API
-
 #### How to install
 
 ```sh
-npm install @weavechain/weave-js-api --save
+npm install @weavechain/weave-node-api --save
 ```
 
 or
 
 ```sh
-yarn add @weavechain/weave-js-api
+yarn add @weavechain/weave-node-api
 ```
 
 
 #### Data read sample
 
 ```js
-import { WeaveAPI, WeaveHelper } from "@weavechain/weave-js-api"
+import { WeaveAPI, WeaveHelper } from "@weavechain/weave-node-api"
 
 const [ pub, pvk ] = WeaveHelper.generateKeys();
 console.log("Public key: ", pub);

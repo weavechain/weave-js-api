@@ -1,5 +1,5 @@
 {
-  "name": "@weavechain/weave-js-api",
+  "name": "@weavechain/weave-node-api",
   "type": "module",
   "version": "1.0.4",
   "description": "Weavechain API",

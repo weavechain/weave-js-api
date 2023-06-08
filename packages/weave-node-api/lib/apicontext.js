@@ -1,11 +1,11 @@
-import keys from "./keys";
+import keys from "./keys.js";
 import { binary_to_base58, base58_to_binary } from 'base58-js'
 import { Buffer } from "buffer";
 import Random from "java-random";
-import { ec, eddsa } from "elliptic";
+import elliptic from "elliptic";
 
-const EC = ec;
-const EdDSA = eddsa;
+const EC = elliptic.ec;
+const EdDSA = elliptic.eddsa;
 
 const MAX_B58_LEN = 55;
 

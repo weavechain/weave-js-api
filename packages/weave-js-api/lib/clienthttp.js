@@ -2,10 +2,9 @@ import keys from './keys'
 import ApiContext from './apicontext'
 import Session from "./session"
 import { addIntegritySignature } from "./helper"
+import { Buffer } from "buffer";
 
 import { enc } from "crypto-js"
-
-const Buffer = require("buffer").Buffer
 
 class ClientHttp {
 

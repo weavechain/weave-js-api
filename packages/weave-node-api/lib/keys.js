@@ -1,8 +1,10 @@
-import { lib, enc, mode, format, pad, AES } from "crypto-js"
-import HmacSHA256 from "crypto-js/hmac-sha256";
-import Base64 from "crypto-js/enc-base64";
+import HmacSHA256 from "crypto-js/hmac-sha256.js";
+import Base64 from "crypto-js/enc-base64.js";
 import { KEYUTIL } from "jsrsasign";
 import { Buffer } from "buffer";
+
+import crypto from "crypto-js";
+import crypt from "crypto";
 
 const CURVE_TYPE = "secp256k1";
 
@@ -84,37 +86,37 @@ function decodePKCS8PublicKey(serverPubHex) {
 class KeyExchange {
 
     encrypt(secretKey, data, seed, iv) {
-        const wkey = enc.Hex.parse(toHex(secretKey));
+        const wkey = crypto.enc.Hex.parse(toHex(secretKey));
         var s = new Int8Array(iv.length);
         for (let i = 0; i < s.length; i++) {
             s[i] = iv[i] ^ seed[i % seed.length];
         }
-        const wseed = enc.Hex.parse(toHex(s));
+        const wseed = crypto.enc.Hex.parse(toHex(s));
 
-        return Buffer.from(AES.encrypt(data, wkey, {
+        return Buffer.from(crypto.AES.encrypt(data, wkey, {
             iv: wseed,
-            mode: mode.CBC,
-            padding: pad.Pkcs7,
+            mode: crypto.mode.CBC,
+            padding: crypto.pad.Pkcs7,
         }).toString(), "base64");
     }
 
     decrypt(secretKey, data, seed, iv) {
-        const wdata =  enc.Hex.parse(toHex(data))
-        const wkey = enc.Hex.parse(toHex(secretKey));
+        const wdata = crypto.enc.Hex.parse(toHex(data))
+        const wkey = crypto.enc.Hex.parse(toHex(secretKey));
         var s = new Int8Array(iv.length);
         for (let i = 0; i < s.length; i++) {
             s[i] = iv[i] ^ seed[i % seed.length];
         }
-        const wseed = enc.Hex.parse(toHex(s));
+        const wseed = crypto.enc.Hex.parse(toHex(s));
 
-        let encrypted = lib.CipherParams.create({
+        let encrypted = crypto.lib.CipherParams.create({
             ciphertext: wdata,
-            formatter: format.OpenSSL
+            formatter: crypto.format.OpenSSL
         });
-        const decrypted = AES.decrypt(encrypted, wkey, {
+        const decrypted = crypto.AES.decrypt(encrypted, wkey, {
             iv: wseed,
-            mode: mode.CBC,
-            padding: pad.Pkcs7,
+            mode: crypto.mode.CBC,
+            padding: crypto.pad.Pkcs7,
         });
         return wordToByteArray(decrypted);
     }
@@ -138,14 +140,23 @@ class KeyExchange {
 
     signRequest(secret, toSign) {
         return HmacSHA256(
-            lib.WordArray.create(new Buffer(toSign)),
-            lib.WordArray.create(new Buffer(secret))
+            crypto.lib.WordArray.create(new Buffer(toSign)),
+            crypto.lib.WordArray.create(new Buffer(secret))
         ).toString(Base64);
     }
 }
 
 const getRandomValues = function getRandomValues(arr) {
-    window.crypto.getRandomValues(arr);
+    let orig = arr;
+    if (arr.byteLength !== arr.length) {
+        arr = new Uint8Array(arr.buffer)
+    }
+    const bytes = crypt.randomBytes(arr.length);
+    for (var i = 0; i < bytes.length; i++) {
+        arr[i] = bytes[i]
+    }
+
+    return orig;
 }
 
 const keys = {

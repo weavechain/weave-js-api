@@ -1,12 +1,12 @@
-import keys from './keys'
-import ApiContext from './apicontext'
-import Session from "./session"
-import { addIntegritySignature } from "./helper"
+import keys from './keys.js'
+import ApiContext from './apicontext.js'
+import Session from "./session.js"
+import { addIntegritySignature } from "./helper.js"
 import { Buffer } from "buffer";
 
+import { v4 } from "uuid";
 
-import { enc } from "crypto-js"
-import { v4 } from "uuid"
+const { enc } = "crypto-js";
 
 const RECONNECT_INTERVAL_MS = 1000;
 
