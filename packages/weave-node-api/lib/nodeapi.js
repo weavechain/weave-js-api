@@ -419,6 +419,10 @@ class NodeApi {
     pluginCall(session, plugin, request, args, timeout) {
         return this.client.pluginCall(session, plugin, request, args, timeout);
     }
+
+    emailAuth(org, clientPubKey, targetWebUrl, email) {
+        return this.client.emailAuth(org, clientPubKey, targetWebUrl, email)
+    }
 }
 
 export default NodeApi;

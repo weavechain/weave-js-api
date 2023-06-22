@@ -1344,6 +1344,23 @@ class ClientWs {
         };
         return this.authPost(session, data);
     }
+
+    emailAuth(org, clientPubKey, targetWebUrl, email) {
+        let toSign = clientPubKey + "\n" + email
+        let signature =this.apiContext.createEd25519Signature(toSign)
+
+        let data = {
+            "organization": org,
+            "clientPubKey": clientPubKey,
+            "targetEmail": email,
+            "targetWebUrl": targetWebUrl,
+            "signature": signature,
+            "x-sig-key": this.apiContext.sigKey
+        }
+        let encodedData = btoa(JSON.stringify(data))
+        let body = {"encodedData": encodedData}
+        this.sendRequest(body, false)
+    }
 }
 
 export default ClientWs;

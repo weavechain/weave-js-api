@@ -132,6 +132,22 @@ export const getCachedTableDefinition = async (session, scope, table, client) =>
     return session.tableLayoutCache[key];
 }
 
+export const encodeString = (plaintext, key = null, iv = null) => {
+    return keys.encodeString(plaintext, key, iv);
+}
+
+export const decodeString = (encrypted, key, iv) => {
+    return keys.decodeString(encrypted, key, iv);
+}
+
+export const encodeStringFor = (plaintext, fromPrivateKey, toPubKey, iv = null) => {
+    return keys.encodeStringFor(plaintext, fromPrivateKey, toPubKey, iv);
+}
+
+export const decodeStringFrom = (encrypted, fromPubKey, toPrivateKey, iv) => {
+    return keys.decodeStringFrom(encrypted, fromPubKey, toPrivateKey, iv);
+}
+
 export const addIntegritySignature = (records, session, scope, client) => {
     return getCachedTableDefinition(session, scope, records.table, client).then((tableDefinition) => {
         let idBuffer = '';
@@ -147,6 +163,7 @@ export const addIntegritySignature = (records, session, scope, client) => {
             let record = standardizeWithoutOwner(recordsArray[i], layout, ownerColumn);
             // hash of single record
             let data = JSON.stringify(record);
+            //console.log(data)
             let hash = client.keyExchange.signRequest(client.apiContext.seedHex, data);
 
             // append to buffers
@@ -161,6 +178,7 @@ export const addIntegritySignature = (records, session, scope, client) => {
         }
 
         let toSign = idBuffer + "\n" + hashBuffer;
+        //console.log(toSign)
         let hashOfHashes = client.keyExchange.signRequest(client.apiContext.seedHex, toSign);
 
         const key = scope + ":" + records.table;
@@ -194,6 +212,10 @@ const WeaveHelper = {
     standardizeRecord,
     standardizeWithoutOwner,
     addIntegritySignature,
+    encodeString,
+    encodeStringFor,
+    decodeString,
+    decodeStringFrom,
     Records,
     Record,
     Options,

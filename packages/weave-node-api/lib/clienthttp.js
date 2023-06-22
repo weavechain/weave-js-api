@@ -1111,6 +1111,23 @@ class ClientHttp {
         };
         return this.authPost(session, "plugin_call", data);
     }
+
+    async emailAuth(org, clientPubKey, targetWebUrl, email) {
+        let toSign = clientPubKey + "\n" + email
+        let signature =this.apiContext.createEd25519Signature(toSign)
+        let data = {
+            "organization": org,
+            "clientPubKey": clientPubKey,
+            "targetEmail": email,
+            "targetWebUrl": targetWebUrl,
+            "signature": signature,
+            "x-sig-key": this.apiContext.sigKey
+        }
+
+        let encodedData = btoa(JSON.stringify(data))
+        let body = {"encodedData": encodedData}
+        return await this.post("email_auth", JSON.stringify(body), null);
+    }
 }
 
 export default ClientHttp;

@@ -1,7 +1,7 @@
 {
   "name": "@weavechain/weave-node-api",
   "type": "module",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Weavechain API",
   "scripts": {
     "clean": "rimraf dist/*",
