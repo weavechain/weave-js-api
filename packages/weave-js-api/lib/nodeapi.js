@@ -63,8 +63,8 @@ class NodeApi {
         return this.client.publicKey();
     }
 
-    sigKey() {
-        return this.client.sigKey();
+    sigKey(account = null) {
+        return this.client.sigKey(account);
     }
 
     status(session) {

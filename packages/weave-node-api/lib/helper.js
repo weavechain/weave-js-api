@@ -13,6 +13,14 @@ export const toHex = (arg) => {
     return keys.toHex(arg);
 }
 
+export const fromHex = (arg) => {
+    return keys.fromHex(arg);
+}
+
+export const fromHexU = (arg) => {
+    return keys.fromHexU(arg);
+}
+
 export const getConfig = (sideChain, pub, pvk, encrypted) => {
     if (sideChain == null) return null;
 
@@ -209,6 +217,8 @@ const WeaveHelper = {
     getConfig,
     generateKeys,
     toHex,
+    fromHex,
+    fromHexU,
     standardizeRecord,
     standardizeWithoutOwner,
     addIntegritySignature,

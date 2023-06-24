@@ -132,8 +132,8 @@ class ClientHttp {
         return this.get("public_key");
     }
 
-    sigKey() {
-        return this.get("sig_key");
+    sigKey(account = null) {
+        return account ? this.post("sig_key",  JSON.stringify({ "account": account }), null) : this.get("sig_key");
     }
 
     signString(toSign, iv) {

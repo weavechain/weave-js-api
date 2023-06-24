@@ -163,8 +163,8 @@ class ClientWs {
         return this.sendRequest({"type": "public_key"}, false);
     }
 
-    sigKey() {
-        return this.sendRequest({"type": "sig_key"}, false);
+    sigKey(account = null) {
+        return this.sendRequest(account ? {"type": "sig_key", "account": account} : {"type": "sig_key"}, false);
     }
 
     sendRequest(data, isAuth = true) {

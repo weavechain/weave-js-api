@@ -113,7 +113,7 @@ class ClientHttp {
             return fetch(this.apiUrl + "/" + this.version + "/" + call, {
                 method: "POST",
                 body: body,
-                headers: headers != null ? new Headers(headers) : undefined,
+                headers: headers != null ? headers : undefined,
             }).then((response) => {
                 if (!response.ok) {
                     console.log(response);
@@ -133,8 +133,8 @@ class ClientHttp {
         return this.get("public_key");
     }
 
-    sigKey() {
-        return this.get("sig_key");
+    sigKey(account = null) {
+        return account ? this.post("sig_key",  JSON.stringify({ "account": account }), null) : this.get("sig_key");
     }
 
     signString(toSign, iv) {

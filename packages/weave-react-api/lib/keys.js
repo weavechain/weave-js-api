@@ -179,7 +179,6 @@ const getRandomValues = function getRandomValues(arr) {
 }
 
 
-
 const encodeString = (plaintext, key, iv) => {
     if (!key) {
         key = new Int8Array(32);
