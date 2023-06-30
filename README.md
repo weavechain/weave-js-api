@@ -27,7 +27,7 @@ import { WeaveAPI, WeaveHelper } from "@weavechain/weave-js-api"
 
 const [ pub, pvk ] = WeaveHelper.generateKeys();
 console.log("Public key: ", pub);
-console.log("Private key:", pvk);
+console.log("Private key: ", pvk);
 
 const node = "https://public.weavechain.com:443/92f30f0b6be2732cb817c19839b0940c";
 const organization = "weavedemo";
