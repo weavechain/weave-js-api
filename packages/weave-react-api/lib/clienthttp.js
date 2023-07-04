@@ -247,7 +247,7 @@ class ClientHttp {
         if (session.integrityChecks) {
             return addIntegritySignature(records, session, scope, this).then(integrity => {
                 records.integrity = integrity;
-                buildAndSendMessage();
+                return buildAndSendMessage();
             });
         } else {
 	        return buildAndSendMessage();
