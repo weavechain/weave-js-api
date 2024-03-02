@@ -681,6 +681,18 @@ class ClientWs {
         return this.authPost(session, data);
     }
 
+    existingMerkleTree(session, scope, table) {
+        const data = {
+            "type": "existing_merkle_tree",
+            "organization": session.organization,
+            "account": session.account,
+            "scope": scope,
+            "table": table
+        };
+
+        return this.authPost(session, data);
+    }
+
     merkleProof(session, scope, table, hash) {
         const data = {
             "type": "merkle_proof",
@@ -763,12 +775,13 @@ class ClientWs {
         return this.authPost(session, pdata);
     }
 
-    verifyMerkleHash(session, tree, hash, digest) {
+    verifyMerkleHash(session, tree, hash, digest, value) {
         const data = {
             "type": "verify_merkle_hash",
             "tree": tree,
             "hash": hash,
-            "digest": digest
+            "digest": digest,
+            "value": value
         };
 
         return this.authPost(session, data);

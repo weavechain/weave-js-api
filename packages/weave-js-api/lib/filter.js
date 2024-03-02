@@ -1,5 +1,3 @@
-const DEFAULT_CREATE_TIMEOUT_SEC = 300;
-
 export class Filter {
 
     constructor(

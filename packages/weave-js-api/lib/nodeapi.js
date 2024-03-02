@@ -203,6 +203,10 @@ class NodeApi {
         return this.client.merkleTree(session, scope, table, filter, salt, digest, options);
     }
 
+    existingMerkleTree(session, scope, table) {
+        return this.client.existingMerkleTree(session, scope, table);
+    }
+
     merkleProof(session, scope, table, hash) {
         return this.client.merkleProof(session, scope, table, hash);
     }
@@ -227,9 +231,9 @@ class NodeApi {
         return this.client.updateProofs(session, scope, table);
     }
 
-    verifyMerkleHash(session, tree, hash, digest) {
+    verifyMerkleHash(session, tree, hash, digest, value) {
         //using remote function for now, could be local
-        return this.client.verifyMerkleHash(session, tree, hash, digest);
+        return this.client.verifyMerkleHash(session, tree, hash, digest, value);
     }
 
     sign(data) {

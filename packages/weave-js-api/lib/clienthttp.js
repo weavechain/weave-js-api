@@ -546,6 +546,15 @@ class ClientHttp {
         return this.authPost(session, "merkle_tree", data);
     }
 
+    existingMerkleTree(session, scope, table) {
+        const data = {
+            "scope": scope,
+            "table": table
+        };
+
+        return this.authPost(session, "existing_merkle_tree", data);
+    }
+
     merkleProof(session, scope, table, hash) {
         const data = {
             "scope": scope,
@@ -611,11 +620,12 @@ class ClientHttp {
         return this.authPost(session, "update_proofs", pdata);
     }
 
-    verifyMerkleHash(session, tree, hash, digest) {
+    verifyMerkleHash(session, tree, hash, digest, value) {
         const data = {
             "tree": tree,
             "hash": hash,
-            "digest": digest
+            "digest": digest,
+            "value": value
         };
 
         return this.authPost(session, "verify_merkle_hash", data);
