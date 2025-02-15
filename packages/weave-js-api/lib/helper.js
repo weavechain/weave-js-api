@@ -1,9 +1,9 @@
-import Records from "./records";
-import Record from "./record";
-import Options from "./options";
-import { Filter, FilterOp, Order } from "./filter";
-import ApiContext from "./apicontext";
-import keys from "./keys";
+import Records from "./records.js";
+import Record from "./record.js";
+import Options from "./options.js";
+import { Filter, FilterOp, Order } from "./filter.js";
+import ApiContext from "./apicontext.js";
+import keys from "./keys.js";
 
 export const generateKeys = () => {
     return ApiContext.generateKeys();

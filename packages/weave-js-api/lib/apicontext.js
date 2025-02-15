@@ -1,4 +1,4 @@
-import keys from "./keys";
+import keys from "./keys.js";
 import { binary_to_base58, base58_to_binary } from 'base58-js'
 import { Buffer } from "buffer";
 import Random from "java-random";
@@ -83,7 +83,7 @@ class ApiContext {
     }
 
     verifyEd25519Signature(publicKey, signature, data) {
-        const sigKey = publicKey != null ? ed.keyFromPublic(keys.toHex(base58_to_binary(publicKey)), 'bytes') : this.apiContext.sigKeys;
+        const sigKey = publicKey != null ? keys.getSigKeyFromEncoded(publicKey) : this.apiContext.sigKeys;
         const sig = keys.toHex(base58_to_binary(signature));
         const encoded = new Buffer(data).toString("hex");
         return sigKey.verify(encoded, sig);

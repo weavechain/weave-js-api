@@ -1,6 +1,7 @@
 import HmacSHA256 from "crypto-js/hmac-sha256.js";
 import Base64 from "crypto-js/enc-base64.js";
 import { KEYUTIL } from "jsrsasign";
+import ASN1 from '@lapo/asn1js';
 import { Buffer } from "buffer";
 import { binary_to_base58, base58_to_binary } from 'base58-js'
 import elliptic from "elliptic";
@@ -13,6 +14,8 @@ import crypt from "crypto";
 const CURVE_TYPE = "secp256k1";
 
 const ecc = new EC(CURVE_TYPE);
+var EdDSA = elliptic.eddsa;
+const ed = new EdDSA("ed25519");
 
 function readKey(publicKey, publicKeyFile) {
     if (publicKey) {
@@ -165,6 +168,15 @@ const getRandomValues = function getRandomValues(arr) {
     return orig;
 }
 
+const getSigKeyFromEncoded = (encodedSigKey) => {
+    const base58Decoded = base58_to_binary(encodedSigKey);
+    if (base58Decoded.length === 32) {
+        return ed.keyFromPublic(keys.toHex(base58Decoded), 'bytes');
+    }
+    const decoded = ASN1.decode(base58Decoded);
+    return ed.keyFromPublic(keys.toHex(decoded.sub[1].stream.enc.slice(decoded.sub[1].stream.pos + 3, decoded.sub[1].stream.pos + 2 + decoded.sub[1].length)));
+}
+
 const encodeString = (plaintext, key, iv) => {
     if (!key) {
         key = new Int8Array(32);
@@ -298,6 +310,7 @@ const keys = {
     getRandomValues,
 
     decodePKCS8PublicKey,
+    getSigKeyFromEncoded,
 
     wordToByteArray,
     strToUtf8Uint8Array,

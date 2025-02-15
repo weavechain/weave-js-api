@@ -1,4 +1,4 @@
-import NodeApi from './nodeapi'
+import NodeApi from './nodeapi.js'
 
 class WeaveAPI {
 

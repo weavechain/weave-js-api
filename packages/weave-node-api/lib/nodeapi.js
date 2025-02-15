@@ -187,6 +187,14 @@ class NodeApi {
         return this.client.heEncode(session, items);
     }
 
+    attest(session, params) {
+        return this.client.attest(session, params);
+    }
+
+    sgxQuote(session, params) {
+        return this.client.sgxQuote(session, params);
+    }
+
     mpc(session, scope, table, algo, fields, filter, options) {
         return this.client.mpc(session, scope, table, algo, fields, filter, options);
     }
@@ -424,8 +432,8 @@ class NodeApi {
         return this.client.pluginCall(session, plugin, request, args, timeout);
     }
 
-    emailAuth(org, clientPubKey, targetWebUrl, email) {
-        return this.client.emailAuth(org, clientPubKey, targetWebUrl, email)
+    emailAuth(org, clientPubKey, targetWebUrl, email, targetApp) {
+        return this.client.emailAuth(org, clientPubKey, targetWebUrl, email, targetApp)
     }
 }
 

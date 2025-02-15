@@ -2,6 +2,8 @@ import { lib, enc, mode, format, pad, AES } from "crypto-js"
 import HmacSHA256 from "crypto-js/hmac-sha256";
 import Base64 from "crypto-js/enc-base64";
 import { KEYUTIL } from "jsrsasign";
+import ASN1 from '@lapo/asn1js';
+import { Buffer } from "buffer";
 import { binary_to_base58, base58_to_binary } from 'base58-js'
 import elliptic from "elliptic";
 
@@ -10,6 +12,8 @@ const EC = elliptic.ec;
 const CURVE_TYPE = "secp256k1";
 
 const ecc = new EC(CURVE_TYPE);
+var EdDSA = elliptic.eddsa;
+const ed = new EdDSA("ed25519");
 
 import { Platform } from "react-native";
 const isWeb = Platform.OS === "web";
@@ -178,6 +182,15 @@ const getRandomValues = function getRandomValues(arr) {
     }
 }
 
+const getSigKeyFromEncoded = (encodedSigKey) => {
+    const base58Decoded = base58_to_binary(encodedSigKey);
+    if (base58Decoded.length === 32) {
+        return ed.keyFromPublic(keys.toHex(base58Decoded), 'bytes');
+    }
+    const decoded = ASN1.decode(base58Decoded);
+    return ed.keyFromPublic(keys.toHex(decoded.sub[1].stream.enc.slice(decoded.sub[1].stream.pos + 3, decoded.sub[1].stream.pos + 2 + decoded.sub[1].length)));
+}
+
 
 const encodeString = (plaintext, key, iv) => {
     if (!key) {
@@ -312,6 +325,7 @@ const keys = {
     getRandomValues,
 
     decodePKCS8PublicKey,
+    getSigKeyFromEncoded,
 
     wordToByteArray,
     strToUtf8Uint8Array,

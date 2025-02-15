@@ -83,7 +83,7 @@ class ApiContext {
     }
 
     verifyEd25519Signature(publicKey, signature, data) {
-        const sigKey = publicKey != null ? ed.keyFromPublic(keys.toHex(base58_to_binary(publicKey)), 'bytes') : this.apiContext.sigKeys;
+        const sigKey = publicKey != null ? keys.getSigKeyFromEncoded(publicKey) : this.apiContext.sigKeys;
         const sig = keys.toHex(base58_to_binary(signature));
         const encoded = new Buffer(data).toString("hex");
         return sigKey.verify(encoded, sig);

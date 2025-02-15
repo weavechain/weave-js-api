@@ -1,8 +1,8 @@
 import keys from './keys.js'
-import options from './options'
-import ApiContext from './apicontext'
-import ClientHttp from './clienthttp'
-import ClientWs from './clientws'
+import options from './options.js'
+import ApiContext from './apicontext.js'
+import ClientHttp from './clienthttp.js'
+import ClientWs from './clientws.js'
 
 class NodeApi {
 
@@ -185,6 +185,14 @@ class NodeApi {
 
     heEncode(session, items) {
         return this.client.heEncode(session, items);
+    }
+
+    attest(session, params) {
+        return this.client.attest(session, params);
+    }
+
+    sgxQuote(session, params) {
+        return this.client.sgxQuote(session, params);
     }
 
     mpc(session, scope, table, algo, fields, filter, options) {
@@ -424,8 +432,8 @@ class NodeApi {
         return this.client.pluginCall(session, plugin, request, args, timeout);
     }
 
-    emailAuth(org, clientPubKey, targetWebUrl, email) {
-        return this.client.emailAuth(org, clientPubKey, targetWebUrl, email)
+    emailAuth(org, clientPubKey, targetWebUrl, email, targetApp) {
+        return this.client.emailAuth(org, clientPubKey, targetWebUrl, email, targetApp)
     }
 }
 

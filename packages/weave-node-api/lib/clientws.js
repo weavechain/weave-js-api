@@ -170,7 +170,7 @@ class ClientWs {
     }
 
     sendRequest(data, isAuth = true) {
-        const id = v4().replace("-", "");
+        const id = v4().replaceAll("-", "");
         data.id = id;
 
         var resolve, reject;
@@ -608,6 +608,28 @@ class ClientWs {
             "organization": session.organization,
             "account": session.account,
             "items": items
+        };
+
+        return this.authPost(session, data);
+    }
+
+    attest(session, params) {
+        const data = {
+            "type": "attest",
+            "organization": session.organization,
+            "account": session.account,
+            "params": params
+        };
+
+        return this.authPost(session, data);
+    }
+
+    sgxQuote(session, params) {
+        const data = {
+            "type": "sgx_quote",
+            "organization": session.organization,
+            "account": session.account,
+            "params": params
         };
 
         return this.authPost(session, data);
@@ -1360,7 +1382,7 @@ class ClientWs {
         return this.authPost(session, data);
     }
 
-    emailAuth(org, clientPubKey, targetWebUrl, email) {
+    emailAuth(org, clientPubKey, targetWebUrl, email, targetApp) {
         let toSign = clientPubKey + "\n" + email
         let signature =this.apiContext.createEd25519Signature(toSign)
 
@@ -1369,6 +1391,7 @@ class ClientWs {
             "clientPubKey": clientPubKey,
             "targetEmail": email,
             "targetWebUrl": targetWebUrl,
+            "targetApp": targetApp,
             "signature": signature,
             "x-sig-key": this.apiContext.sigKey
         }

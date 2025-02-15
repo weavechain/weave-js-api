@@ -1,7 +1,7 @@
 {
   "name": "@weavechain/weave-node-api",
   "type": "module",
-  "version": "1.0.9",
+  "version": "1.0.14",
   "description": "Weavechain API",
   "scripts": {
     "clean": "rimraf dist/*",
@@ -35,9 +35,10 @@
   ],
   "homepage": "https://docs.weavechain.com",
   "dependencies": {
+    "@lapo/asn1js": "^1.2.3",
     "base58-js": "^2.0.0",
     "crypto-js": "^4.1.1",
-    "elliptic": "^6.5.4",
+    "elliptic": "^6.6.1",
     "eslint": "^7.32.0",
     "eslint-plugin-markdown": "^2.2.1",
     "java-random": "^0.4.0",

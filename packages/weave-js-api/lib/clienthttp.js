@@ -1,7 +1,7 @@
-import keys from './keys'
-import ApiContext from './apicontext'
-import Session from "./session"
-import { addIntegritySignature } from "./helper"
+import keys from './keys.js'
+import ApiContext from './apicontext.js'
+import Session from "./session.js"
+import { addIntegritySignature } from "./helper.js"
 import { Buffer } from "buffer";
 
 import { enc } from "crypto-js"
@@ -11,7 +11,7 @@ class ClientHttp {
     constructor(
         config
     ) {
-        this.version = "v1";
+        this.apiVersion = "v1";
 
         this.config = config;
         this.keyExchange = new keys.KeyExchange();
@@ -51,12 +51,19 @@ class ClientHttp {
     version() {
         return fetch(this.apiUrl + "/version", {
             method: "GET"
+        }).then((response) => {
+            if (!response.ok) {
+                console.log(response);
+                return null;
+            } else {
+                return response.json();
+            }
         });
     }
 
     get(call) {
-        console.log(this.apiUrl + "/" + this.version + "/" + call)
-        return fetch(this.apiUrl + "/" + this.version + "/" + call, {
+        console.log(this.apiUrl + "/" + this.apiVersion + "/" + call)
+        return fetch(this.apiUrl + "/" + this.apiVersion + "/" + call, {
             method: "GET"
         }).then((response) => {
             if (!response.ok) {
@@ -86,7 +93,7 @@ class ClientHttp {
                 "x-key": this.apiContext.publicKey
             }
 
-            return fetch(this.apiUrl + "/" + this.version + "/enc", {
+            return fetch(this.apiUrl + "/" + this.apiVersion + "/enc", {
                 method: "POST",
                 body: JSON.stringify(request),
             }).then((response) => {
@@ -110,7 +117,7 @@ class ClientHttp {
                 }
             });
         } else {
-            return fetch(this.apiUrl + "/" + this.version + "/" + call, {
+            return fetch(this.apiUrl + "/" + this.apiVersion + "/" + call, {
                 method: "POST",
                 body: body,
                 headers: headers != null ? headers : undefined,
@@ -188,7 +195,7 @@ class ClientHttp {
         const nonce = session.getNonce().toString();
         const signature = this.keyExchange.signHTTP(
             session.secret,
-            "/" + this.version + "/" + call,
+            "/" + this.apiVersion + "/" + call,
             session.apiKey,
             nonce,
             body
@@ -482,6 +489,22 @@ class ClientHttp {
         };
 
         return this.authPost(session, "he_encode", data);
+    }
+
+    attest(session, params) {
+        const data = {
+            "params": params
+        };
+
+        return this.authPost(session, "attest", data);
+    }
+
+    sgxQuote(session, params) {
+        const data = {
+            "params": params
+        };
+
+        return this.authPost(session, "sgx_quote", data);
     }
 
     mpc(session, scope, table, algo, fields, filter, options) {
@@ -1119,7 +1142,7 @@ class ClientHttp {
         return this.authPost(session, "plugin_call", data);
     }
 
-    async emailAuth(org, clientPubKey, targetWebUrl, email) {
+    async emailAuth(org, clientPubKey, targetWebUrl, email, targetApp) {
         let toSign = clientPubKey + "\n" + email
         let signature =this.apiContext.createEd25519Signature(toSign)
         let data = {
@@ -1127,6 +1150,7 @@ class ClientHttp {
             "clientPubKey": clientPubKey,
             "targetEmail": email,
             "targetWebUrl": targetWebUrl,
+            "targetApp": targetApp,
             "signature": signature,
             "x-sig-key": this.apiContext.sigKey
         }
